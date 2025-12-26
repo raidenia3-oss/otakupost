@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OtakuPost - Tu Portal de Anime y Manga</title>
+    <meta name="description" content="Blog especializado en anime, manga, reviews, rankings y análisis profundos de tus series favoritas. Descubre los mejores anime, lee reviews honestas y mantente al día con las últimas noticias del mundo otaku.">
+    <meta name="keywords" content="anime, manga, reviews anime, rankings anime, análisis anime, noticias anime, otaku, anime 2024">
+    <meta name="author" content="OtakuPost">
+    
+    <!-- Google Search Console Verification - AÑADE TU CÓDIGO AQUÍ -->
+    <!-- <meta name="google-site-verification" content="TU_CODIGO_AQUI" /> -->
+    
+    <!-- Google Analytics - AÑADE TU CÓDIGO AQUÍ -->
+    <!-- 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=TU_ID_AQUI"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'TU_ID_AQUI');
+    </script>
+    -->
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #9333ea;
+            --secondary: #3b82f6;
+            --accent: #ec4899;
+            --dark: #0f0f23;
+            --darker: #050510;
+            --card: #1a1a2e;
+            --text: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(147, 51, 234, 0.2);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .controls {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.8rem 1.2rem;
+            background: var(--card);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--card);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 8px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .articles-grid {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(147, 51, 234, 0.2);
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.3);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .article-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .article-excerpt {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .read-more {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .read-more:hover {
+            color: var(--accent);
+        }
+
+        .article-view {
+            display: none;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .article-view.active {
+            display: block;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: var(--card);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .article-full {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(147, 51, 234, 0.2);
+        }
+
+        .article-full img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .article-full h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .article-body h2 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        footer {
+            background: var(--card);
+            margin-top: 4rem;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(147, 51, 234, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(147, 51, 234, 0.2);
+            color: var(--text-dim);
+        }
+
+        .page-content {
+            display: none;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card);
+            border-radius: 12px;
+            border: 1px solid rgba(147, 51, 234, 0.2);
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        .page-content h1 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .page-content h2 {
+            color: var(--accent);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-content p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .article-full h1 {
+                font-size: 1.8rem;
+            }
+
+            .article-full img {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🎌 OtakuPost</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showHome()">Inicio</a></li>
+                <li><a href="#" onclick="showPage('about')">Sobre Nosotros</a></li>
+                <li><a href="#" onclick="showPage('privacy')">Privacidad</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="home-view">
+        <section class="hero">
+            <h1>Bienvenido a OtakuPost</h1>
+            <p>Tu fuente definitiva de análisis, reviews y rankings del mundo anime y manga</p>
+        </section>
+
+        <div class="controls">
+            <input type="text" class="search-box" id="searchInput" placeholder="Buscar artículos..." onkeyup="filterArticles()">
+            <div class="category-filter">
+                <button class="filter-btn active" onclick="filterByCategory('Todos')">Todos</button>
+                <button class="filter-btn" onclick="filterByCategory('Reviews')">Reviews</button>
+                <button class="filter-btn" onclick="filterByCategory('Rankings')">Rankings</button>
+                <button class="filter-btn" onclick="filterByCategory('Análisis')">Análisis</button>
+                <button class="filter-btn" onclick="filterByCategory('Guías')">Guías</button>
+            </div>
+        </div>
+
+        <div class="articles-grid" id="articlesGrid"></div>
+    </div>
+
+    <div id="article-view" class="article-view"></div>
+
+    <div id="about-page" class="page-content">
+        <a href="#" class="back-btn" onclick="showHome()">← Volver al inicio</a>
+        <h1>Sobre OtakuPost</h1>
+        <p>OtakuPost es un blog especializado en anime y manga creado por fans para fans. Nuestra misión es proporcionar análisis profundos, reviews honestas y contenido de calidad sobre tus series favoritas.</p>
+        <h2>Nuestra Misión</h2>
+        <p>Queremos ser tu fuente confiable de información sobre anime, ofreciendo perspectivas únicas y análisis detallados que te ayuden a descubrir nuevas series y entender mejor tus favoritas.</p>
+        <h2>Contacta con Nosotros</h2>
+        <p>Email: contacto@otakupost.com</p>
+        <p>Síguenos en redes sociales para contenido exclusivo y actualizaciones diarias.</p>
+    </div>
+
+    <div id="privacy-page" class="page-content">
+        <a href="#" class="back-btn" onclick="showHome()">← Volver al inicio</a>
+        <h1>Política de Privacidad</h1>
+        <p><strong>Última actualización:</strong> Diciembre 2024</p>
+        
+        <h2>Información que Recopilamos</h2>
+        <p>En OtakuPost, respetamos tu privacidad. Recopilamos información mínima necesaria para mejorar tu experiencia en nuestro sitio.</p>
+        
+        <h2>Uso de Cookies</h2>
+        <p>Utilizamos cookies para mejorar la funcionalidad del sitio y analizar el tráfico. Puedes desactivar las cookies en la configuración de tu navegador.</p>
+        
+        <h2>Google AdSense</h2>
+        <p>Este sitio utiliza Google AdSense para mostrar anuncios. Google puede usar cookies para personalizar los anuncios según tus intereses.</p>
+        
+        <h2>Análisis del Sitio</h2>
+        <p>Utilizamos Google Analytics para entender cómo los visitantes usan nuestro sitio. Esta información nos ayuda a mejorar el contenido.</p>
+        
+        <h2>Enlaces a Terceros</h2>
+        <p>Nuestro sitio puede contener enlaces a sitios externos. No somos responsables de las prácticas de privacidad de estos sitios.</p>
+        
+        <h2>Tus Derechos</h2>
+        <p>Tienes derecho a solicitar acceso, corrección o eliminación de tu información personal.</p>
+        
+        <h2>Contacto</h2>
+        <p>Si tienes preguntas sobre esta política de privacidad, contáctanos en: privacidad@otakupost.com</p>
+    </div>
+
+    <div id="contact-page" class="page-content">
+        <a href="#" class="back-btn" onclick="showHome()">← Volver al inicio</a>
+        <h1>Contacto</h1>
+        <p>¿Tienes preguntas, sugerencias o quieres colaborar con nosotros? ¡Nos encantaría escucharte!</p>
+        
+        <h2>Email</h2>
+        <p>contacto@otakupost.com</p>
+        
+        <h2>Redes Sociales</h2>
+        <p>Síguenos en nuestras redes sociales para contenido exclusivo:</p>
+        <p>• Twitter: @OtakuPost</p>
+        <p>• Instagram: @OtakuPost</p>
+        <p>• TikTok: @OtakuPost</p>
+        
+        <h2>Publicidad y Colaboraciones</h2>
+        <p>Para propuestas de publicidad o colaboraciones: publicidad@otakupost.com</p>
+        
+        <h2>Tiempo de Respuesta</h2>
+        <p>Respondemos todos los correos en un plazo de 24-48 horas.</p>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>OtakuPost</h3>
+                <p>Tu portal definitivo de anime y manga. Análisis, reviews y las últimas noticias del mundo otaku.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Categorías</h3>
+                <ul>
+                    <li><a href="#" onclick="filterByCategory('Reviews')">Reviews</a></li>
+                    <li><a href="#" onclick="filterByCategory('Rankings')">Rankings</a></li>
+                    <li><a href="#" onclick="filterByCategory('Análisis')">Análisis</a></li>
+                    <li><a href="#" onclick="filterByCategory('Guías')">Guías</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#" onclick="showPage('about')">Sobre Nosotros</a></li>
+                    <li><a href="#" onclick="showPage('privacy')">Política de Privacidad</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 OtakuPost. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        const articles = [
+            {
+                id: 1,
+                title: "Top 10 Anime Isekai que Debes Ver en 2024",
+                excerpt: "Descubre los mejores anime de otro mundo que están revolucionando la industria este año.",
+                category: "Rankings",
+                date: "2024-12-22",
+                image: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800",
+                content: `<h2>Los Mejores Isekai de 2024</h2><p>El género isekai continúa dominando la industria del anime. En este ranking exploramos las series que están redefiniendo el género.</p><h2>1. Frieren: Beyond Journey's End</h2><p>Esta serie ha capturado corazones con su enfoque reflexivo sobre el tiempo y la amistad.</p><h2>Conclusión</h2><p>2024 ha sido excepcional para el isekai, con series que van más allá de los tropos típicos.</p>`
+            },
+            {
+                id: 2,
+                title: "Análisis Profundo: Jujutsu Kaisen Temporada 2",
+                excerpt: "Un análisis completo del arco de Shibuya y cómo elevó el estándar del shonen moderno.",
+                category: "Análisis",
+                date: "2024-12-21",
+                image: "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=800",
+                content: `<h2>El Arco de Shibuya</h2><p>La segunda temporada nos entregó uno de los arcos más intensos del shonen moderno.</p><h2>Animación Espectacular</h2><p>MAPPA superó expectativas con calidad cinematográfica en cada episodio.</p>`
+            },
+            {
+                id: 3,
+                title: "Review: Chainsaw Man - ¿Vale la Pena el Hype?",
+                excerpt: "Evaluamos si esta adaptación cumplió con las expectativas de los fans del manga.",
+                category: "Reviews",
+                date: "2024-12-20",
+                image: "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=800",
+                content: `<h2>Una Adaptación Única</h2><p>Chainsaw Man llegó con un enfoque cinematográfico que dividió opiniones.</p><h2>Veredicto</h2><p>Una adaptación ambiciosa que merece ser vista. Calificación: 8.5/10</p>`
+            },
+            {
+                id: 4,
+                title: "Guía Definitiva para Empezar con One Piece",
+                excerpt: "¿Intimidado por 1000+ capítulos? Esta guía te ayudará a comenzar tu aventura.",
+                category: "Guías",
+                date: "2024-12-19",
+                image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800",
+                content: `<h2>Empezando la Mayor Aventura</h2><p>One Piece puede parecer intimidante pero es una de las mejores historias del anime.</p><h2>Arcos Imperdibles</h2><p>Arlong Park, Alabasta, Enies Lobby, Marineford, Wano.</p>`
+            },
+            {
+                id: 5,
+                title: "Los 5 Estudios de Animación Más Influyentes de 2024",
+                excerpt: "Estudios que están definiendo el futuro del anime con innovaciones técnicas.",
+                category: "Análisis",
+                date: "2024-12-18",
+                image: "https://images.unsplash.com/photo-1613376023733-0a73315d9b06?w=800",
+                content: `<h2>Los Gigantes de la Industria</h2><p>MAPPA, Ufotable, Wit Studio, Bones y CloverWorks están redefiniendo la animación.</p>`
+            },
+            {
+                id: 6,
+                title: "Top 10 Anime Romance que Te Harán Suspirar en 2024",
+                excerpt: "Las historias de amor más hermosas y emotivas que nos regaló este año.",
+                category: "Rankings",
+                date: "2024-12-17",
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+                content: `<h2>El Romance en el Anime</h2><p>El género romance ha evolucionado con narrativas maduras y personajes complejos.</p><h2>1. Horimiya</h2><p>Una historia dulce sobre el amor adolescente auténtico.</p><h2>Conclusión</h2><p>Estas series demuestran que el romance anime va más allá de los clichés típicos.</p>`
+            },
+            {
+                id: 7,
+                title: "Los 15 Mejores Anime Psicológicos que Desafiarán tu Mente",
+                excerpt: "Prepárate para cuestionar la realidad con estos thrillers psicológicos inolvidables.",
+                category: "Rankings",
+                date: "2024-12-16",
+                image: "https://images.unsplash.com/photo-1516981442399-6e5b143ef21e?w=800",
+                content: `<h2>Anime que Te Harán Pensar</h2><p>El género psicológico explora las profundidades de la mente humana.</p><h2>Death Note</h2><p>El clásico batalla de ingenios que definió una generación.</p><h2>Monster</h2><p>Una obra maestra sobre moralidad y naturaleza humana.</p>`
+            },
+            {
+                id: 8,
+                title: "Top 10 Anime de Acción con las Mejores Escenas de Pelea",
+                excerpt: "Coreografías espectaculares y animación fluida en estos anime de acción imperdibles.",
+                category: "Rankings",
+                date: "2024-12-15",
+                image: "https://images.unsplash.com/photo-1574717024653-61fd2cf40c11?w=800",
+                content: `<h2>La Acción en su Máxima Expresión</h2><p>Estos anime llevan las peleas a nivel cinematográfico.</p><h2>Demon Slayer</h2><p>Ufotable revolucionó la animación de combate con efectos visuales impresionantes.</p>`
+            },
+            {
+                id: 9,
+                title: "Review Completa: Demon Slayer Temporada 3",
+                excerpt: "¿El arco de la Villa de los Herreros cumplió las expectativas? Análisis profundo.",
+                category: "Reviews",
+                date: "2024-12-14",
+                image: "https://images.unsplash.com/photo-1606857521015-7f9fcf423740?w=800",
+                content: `<h2>El Arco de la Villa de los Herreros</h2><p>La tercera temporada nos trajo desarrollo de personajes y batallas épicas.</p><h2>Animación de Ufotable</h2><p>Como siempre, la calidad visual es insuperable.</p><h2>Veredicto</h2><p>Una temporada sólida que prepara el terreno para lo que viene. 9/10</p>`
+            },
+            {
+                id: 10,
+                title: "Spy x Family: ¿El Anime Familiar Perfecto?",
+                excerpt: "Analizamos por qué esta serie conquistó corazones con su mezcla de acción y comedia.",
+                category: "Reviews",
+                date: "2024-12-13",
+                image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800",
+                content: `<h2>Una Familia Poco Convencional</h2><p>Spy x Family combina espionaje, comedia y momentos emotivos de manera perfecta.</p><h2>Personajes Carismáticos</h2><p>Loid, Yor y Anya forman el trío más adorable del anime reciente.</p>`
+            },
+            {
+                id: 11,
+                title: "Vinland Saga Temporada 2: Una Obra Maestra Narrativa",
+                excerpt: "De la venganza a la redención: cómo esta temporada superó todas las expectativas.",
+                category: "Reviews",
+                date: "2024-12-12",
+                image: "https://images.unsplash.com/photo-1579547621113-e4bb2a19bdd6?w=800",
+                content: `<h2>El Cambio de Thorfinn</h2><p>La segunda temporada nos mostró un viaje de redención profundamente humano.</p><h2>Narrativa Madura</h2><p>Wit Studio entregó una historia sobre pacifismo y crecimiento personal inolvidable.</p>`
+            },
+            {
+                id: 12,
+                title: "El Fenómeno Isekai: Por Qué Este Género Domina el Anime",
+                excerpt: "Análisis profundo sobre la popularidad del género de mundos alternativos.",
+                category: "Análisis",
+                date: "2024-12-11",
+                image: "https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=800",
+                content: `<h2>Escapismo y Fantasía</h2><p>El isekai ofrece lo que todos deseamos: una segunda oportunidad en un mundo nuevo.</p><h2>Evolución del Género</h2><p>De SAO a Frieren, el isekai ha madurado narrativamente.</p>`
+            },
+            {
+                id: 13,
+                title: "La Evolución del Anime en los Últimos 10 Años",
+                excerpt: "Cómo la industria ha cambiado y hacia dónde se dirige el futuro del anime.",
+                category: "Análisis",
+                date: "2024-12-10",
+                image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800",
+                content: `<h2>Una Década de Cambios</h2><p>El anime ha experimentado una revolución en producción, distribución y audiencia global.</p><h2>El Impacto del Streaming</h2><p>Plataformas como Crunchyroll y Netflix han democratizado el acceso al anime mundialmente.</p>`
+            },
+            {
+                id: 14,
+                title: "Studio Ghibli y Su Legado Inmortal en el Anime",
+                excerpt: "Cómo Hayao Miyazaki y su estudio han influenciado generaciones de animadores.",
+                category: "Análisis",
+                date: "2024-12-09",
+                image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+                content: `<h2>El Estudio que Cambió Todo</h2><p>Studio Ghibli no solo hace películas, crea obras de arte que trascienden generaciones.</p><h2>La Filosofía de Miyazaki</h2><p>Temas ambientales, pacifismo y personajes femeninos fuertes definen su obra.</p><h2>Legado</h2><p>Su influencia se ve en cada rincón de la animación moderna mundial.</p>`
+            },
+            {
+                id: 15,
+                title: "Guía Completa: Cómo Empezar a Ver Anime para Principiantes",
+                excerpt: "Todo lo que necesitas saber para adentrarte en el maravilloso mundo del anime.",
+                category: "Guías",
+                date: "2024-12-08",
+                image: "https://images.unsplash.com/photo-1541480601022-2308c0f02487?w=800",
+                content: `<h2>Bienvenido al Anime</h2><p>Si eres nuevo, esta guía te ayudará a navegar el vasto mundo de la animación japonesa.</p><h2>Por Dónde Empezar</h2><p>Recomendamos: Death Note, Attack on Titan, My Hero Academia para principiantes.</p><h2>Plataformas Legales</h2><p>Crunchyroll, Netflix, Amazon Prime Video tienen catálogos extensos.</p><h2>Géneros Principales</h2><p>Shonen (acción), Seinen (maduro), Shojo (romance), Slice of Life, Isekai.</p>`
+            }
+        ];
+
+        let currentCategory = 'Todos';
+
+        function init() {
+            renderArticles();
+        }
+
+        function renderArticles() {
+            const grid = document.getElementById('articlesGrid');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            let filtered = articles.filter(article => {
+                const matchesCategory = currentCategory === 'Todos' || article.category === currentCategory;
+                const matchesSearch = article.title.toLowerCase().includes(searchTerm) || 
+                                     article.excerpt.toLowerCase().includes(searchTerm);
+                return matchesCategory && matchesSearch;
+            });
+
+            grid.innerHTML = filtered.map(article => `
+                <div class="article-card" onclick="showArticle(${article.id})">
+                    <img src="${article.image}" alt="${article.title}" class="article-image">
+                    <div class="article-content">
+                        <span class="article-category">${article.category}</span>
+                        <h2 class="article-title">${article.title}</h2>
+                        <p class="article-excerpt">${article.excerpt}</p>
+                        <div class="article-meta">
+                            <span>${article.date}</span>
+                            <a href="#" class="read-more" onclick="event.stopPropagation(); showArticle(${article.id})">Leer más →</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterByCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === category) {
+                    btn.classList.add('active');
+                }
+            });
+            renderArticles();
+            showHome();
+        }
+
+        function filterArticles() {
+            renderArticles();
+        }
+
+        function showArticle(id) {
+            const article = articles.find(a => a.id === id);
+            if (!article) return;
+
+            const articleView = document.getElementById('article-view');
+            articleView.innerHTML = `
+                <a href="#" class="back-btn" onclick="showHome()">← Volver a artículos</a>
+                <div class="article-full">
+                    <img src="${article.image}" alt="${article.title}">
+                    <span class="article-category">${article.category}</span>
+                    <h1>${article.title}</h1>
+                    <div class="article-meta" style="margin-bottom: 2rem;">
+                        <span>${article.date}</span>
+                    </div>
+                    <div class="article-body">
+                        ${article.content}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('home-view').style.display = 'none';
+            document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
+            articleView.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showHome() {
+            document.getElementById('home-view').style.display = 'block';
+            document.getElementById('article-view').classList.remove('active');
+            document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
+            window.scrollTo(0, 0);
+        }
+
+        function showPage(pageId) {
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('article-view').classList.remove('active');
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId + '-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
